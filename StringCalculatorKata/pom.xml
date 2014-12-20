@@ -52,7 +52,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration> 
-          <argLine>-javaagent:${sonar.jacoco.jar}=destfile=${sonar.jacoco.reportPath},append=false,includes=it.garr.greenmst.*</argLine>
+          <argLine>-javaagent:${sonar.jacoco.jar}=destfile=${sonar.jacoco.reportPath},append=false,includes=it.reti.*</argLine>
           <test>**/*.java</test>
         </configuration> 
       </plugin>

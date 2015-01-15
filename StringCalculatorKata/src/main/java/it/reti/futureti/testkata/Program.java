@@ -32,36 +32,61 @@ import java.util.stream.Collectors;
  */
 public class Program {
 
+	private boolean isFirstLineSeparator(String numbers) {
+		String[] separatorsplit = numbers.split("\n");
+		return (separatorsplit[0].length() == 1 && !separatorsplit[0].matches("\\d"));
+	}
+	
+	private String[] getSplitters(String numbers, boolean isFirstLineSeparator) {
+		String[] splitters = { ",", "\n" };
+		String[] separatorsplit = numbers.split("\n");
+		
+		if (isFirstLineSeparator) {
+			splitters = new String[] { separatorsplit[0] };
+		}
+		
+		return splitters;
+	}
+	
+	private String[] getVals(String numbers) {
+		boolean isFirstLineSeparator = isFirstLineSeparator(numbers);
+		String[] splitters = getSplitters(numbers, isFirstLineSeparator);
+		String regexp = Arrays.stream(splitters).collect(Collectors.joining("|")).replace("\n", "\\n");
+		
+		if (isFirstLineSeparator) {
+			return numbers.substring(2).split(regexp, -1);
+		} else {
+			return numbers.split(regexp, -1);
+		}
+	}
+	
+	private int getIntVal(String val) throws ProgramException {
+		if ("".equals(val)) {
+			throw new ProgramException("Wrong input passed.");
+		}
+		
+		try {
+			int curval = Integer.parseInt(val);
+			if (curval < 0) {
+				throw new ProgramException("Negatives not allowed.");
+			}
+			return curval;
+		} catch (NumberFormatException e) {
+			throw new ProgramException("Wrong input passed.", e);
+		}
+	}
+	
 	public int add(String numbers) throws ProgramException {
-		String strnumbers = numbers;
 		int result = 0;
-
+		
 		if (numbers == null || "".equals(numbers)) {
 			return result;
 		}
 
-		String[] splitters = { ",", "\n" };
-		String[] separatorsplit = numbers.split("\n");
-		if (separatorsplit[0].length() == 1 && !separatorsplit[0].matches("\\d")) {
-			splitters = new String[] { separatorsplit[0] };
-			strnumbers = numbers.substring(2);
-		}
+		String[] vals = getVals(numbers);
 
-		String[] vals = strnumbers.split(Arrays.stream(splitters).collect(Collectors.joining("|")).replace("\n", "\\n"), -1);
 		for (String val : vals) {
-			if ("".equals(val)) {
-				throw new ProgramException("Wrong input passed.");
-			}
-
-			try {
-				int curval = Integer.parseInt(val);
-				if (curval < 0) {
-					throw new ProgramException("Negatives not allowed.");
-				}
-				result += curval;
-			} catch (NumberFormatException e) {
-				throw new ProgramException("Wrong input passed.", e);
-			}
+			result += getIntVal(val);
 		}
 
 		return result;

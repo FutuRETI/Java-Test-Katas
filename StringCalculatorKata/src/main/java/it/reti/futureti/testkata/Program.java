@@ -34,7 +34,7 @@ public class Program {
 
 	private boolean isFirstLineSeparator(String numbers) {
 		String[] separatorsplit = numbers.split("\n");
-		return (separatorsplit[0].length() == 1 && !separatorsplit[0].matches("\\d"));
+		return separatorsplit[0].length() == 1 && !separatorsplit[0].matches("\\d");
 	}
 	
 	private String[] getSplitters(String numbers, boolean isFirstLineSeparator) {

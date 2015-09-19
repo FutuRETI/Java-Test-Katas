@@ -106,6 +106,7 @@ public class ProgramTests {
 		program.add(input);
 
 		// assert
+		Assert.fail("Should have thrown an exception!");
 	}
 	
 	@Test(expected = ProgramException.class)
@@ -118,6 +119,7 @@ public class ProgramTests {
 		program.add(input);
 
 		// assert
+		Assert.fail("Should have thrown an exception!");
 	}
 
 	@Test
